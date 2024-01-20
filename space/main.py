@@ -1,4 +1,7 @@
 from constants import *
+from player import Player
+
+my_player = Player(player_image)
 
 running = True
 while running:
@@ -6,3 +9,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
+    screen.fill((0,0,0))
+    my_player.draw()
+    my_player.move()
+    pygame.display.update()
+    clock.tick(FPS)
