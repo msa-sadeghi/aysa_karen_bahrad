@@ -2,17 +2,11 @@ from pygame.sprite import Sprite
 import pygame
 from constants import *
 class Player(Sprite):
-    def __init__(self, x,y, enemy_group, lava_group):
+    def __init__(self, x,y):
         super().__init__()
-        self.reset(x,y, enemy_group, lava_group)
-    
-
-
-    def reset(self,x,y, enemy_group, lava_group):
+        
         self.right_images = []
         self.left_images = []
-        self.enemy_group = enemy_group
-        self.lava_group = lava_group
         for i in range(1, 5):
             img = pygame.image.load(f"assets/guy{i}.png")
             img = pygame.transform.scale(img, (64, 64))
@@ -23,7 +17,7 @@ class Player(Sprite):
        
         self.frame_index = 0
         self.counter = 0
-        self.image = self.right_idle[self.frame_index]
+        self.image = self.right_images[self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.topleft = (x,y)
         self.vel_y = 0
@@ -41,8 +35,6 @@ class Player(Sprite):
         dx = 0
         dy = 0
         COOL_DOWN = 3
-        
-        
         key = pygame.key.get_pressed()
         if key[pygame.K_SPACE] and not self.jumped and not self.inair:
             self.vel_y = -11
@@ -84,6 +76,9 @@ class Player(Sprite):
         #add gravity
         self.vel_y += 1
         dy += self.vel_y
+        
+        self.rect.x += dx
+        self.rect.y += dy
 
 
 

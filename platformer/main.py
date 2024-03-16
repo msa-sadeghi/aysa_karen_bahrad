@@ -2,7 +2,7 @@ import pygame
 
 from constants import *
 from world import World
-
+from levels.level_creator import world_data
 
 from player import Player
 
@@ -14,14 +14,7 @@ clock = pygame.time.Clock()
 player = Player(100,screen_height-100)
 world = World(world_data)
 
-
-
 bg_img = pygame.image.load("assets/sky.png")
-
-
-
-
-
 
 running = True
 while running:
@@ -30,7 +23,9 @@ while running:
             running = False
 
     screen.blit(bg_img, (0,0))
-    
+    world.draw(screen)
+    player.draw(screen)
+    player.update()
    
 
     pygame.display.update()
