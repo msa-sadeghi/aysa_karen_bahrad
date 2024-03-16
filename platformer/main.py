@@ -11,7 +11,7 @@ pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
-player = Player(100,screen_height-100)
+player = Player(100,screen_height-600)
 world = World(world_data)
 
 bg_img = pygame.image.load("assets/sky.png")
@@ -25,7 +25,7 @@ while running:
     screen.blit(bg_img, (0,0))
     world.draw(screen)
     player.draw(screen)
-    player.update()
+    player.update(world.tile_list)
    
 
     pygame.display.update()
