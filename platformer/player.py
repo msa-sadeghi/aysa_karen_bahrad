@@ -31,7 +31,6 @@ class Player(Sprite):
         screen.blit(self.image, self.rect)
 
     def update(self):
-
         dx = 0
         dy = 0
         COOL_DOWN = 3
@@ -74,8 +73,8 @@ class Player(Sprite):
                 self.image = self.left_images[1]
 
         #add gravity
-        self.vel_y += 1
         dy += self.vel_y
+        self.vel_y += 1
         
         self.rect.x += dx
         self.rect.y += dy
