@@ -26,68 +26,75 @@ class Player(Sprite):
         self.idle = True
         self.inair = False
         self.dead_image = pygame.image.load("assets/ghost.png")
+        self.alive = True
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def update(self, tiles):
+    
+    def update(self, tiles, enemy_group):
         dx = 0
         dy = 0
-        COOL_DOWN = 3
-        key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE] and not self.jumped and not self.inair:
-            self.vel_y = -15
-            self.jumped = True
-            self.inair = True
-        if not key[pygame.K_SPACE]:
-            self.jumped = False
-        if key[pygame.K_LEFT]:
-            self.idle = False
-            dx -= 5
-            self.direction = -1
-            self.counter += 1
-        if key[pygame.K_RIGHT]:
-            self.idle = False
-            dx += 5
-            self.direction = 1
-            self.counter += 1
-        
-        if not key[pygame.K_LEFT] and not key[pygame.K_RIGHT]:
-            self.counter += 1
-            self.idle = True
-        if self.counter > COOL_DOWN:
-            self.counter = 0
-            self.frame_index += 1
-        if self.frame_index >= len(self.right_images):
-            self.frame_index = 0
-        if not self.idle:
-            if self.direction == 1:
-                self.image = self.right_images[self.frame_index]
-            if self.direction == -1:
-                self.image = self.left_images[self.frame_index]
-        
-        else:
-            if self.direction == 1:
-                self.image = self.right_images[1]
-            if self.direction == -1:
-                self.image = self.left_images[1]
+        if self.alive:
+            COOL_DOWN = 3
+            key = pygame.key.get_pressed()
+            if key[pygame.K_SPACE] and not self.jumped and not self.inair:
+                self.vel_y = -15
+                self.jumped = True
+                self.inair = True
+            if not key[pygame.K_SPACE]:
+                self.jumped = False
+            if key[pygame.K_LEFT]:
+                self.idle = False
+                dx -= 5
+                self.direction = -1
+                self.counter += 1
+            if key[pygame.K_RIGHT]:
+                self.idle = False
+                dx += 5
+                self.direction = 1
+                self.counter += 1
+            
+            if not key[pygame.K_LEFT] and not key[pygame.K_RIGHT]:
+                self.counter += 1
+                self.idle = True
+            if self.counter > COOL_DOWN:
+                self.counter = 0
+                self.frame_index += 1
+            if self.frame_index >= len(self.right_images):
+                self.frame_index = 0
+            if not self.idle:
+                if self.direction == 1:
+                    self.image = self.right_images[self.frame_index]
+                if self.direction == -1:
+                    self.image = self.left_images[self.frame_index]
+            
+            else:
+                if self.direction == 1:
+                    self.image = self.right_images[1]
+                if self.direction == -1:
+                    self.image = self.left_images[1]
 
-        #add gravity
-        dy += self.vel_y
-        self.vel_y += 1
+            #add gravity
+            dy += self.vel_y
+            self.vel_y += 1
+            
+            
+            for t in tiles:
+                if t[1].colliderect(self.rect.x + dx, self.rect.y, self.rect.width, self.rect.height):
+                    dx = 0
+                if t[1].colliderect(self.rect.x, self.rect.y + dy, self.rect.width, self.rect.height):
+                    self.vel_y = 0
+                    dy = 0
+                    self.inair = False
+            
+            if pygame.sprite.spritecollide(self, enemy_group, True):
+                self.alive = False
         
-        
-        for t in tiles:
-            if t[1].colliderect(self.rect.x + dx, self.rect.y, self.rect.width, self.rect.height):
-                dx = 0
-            if t[1].colliderect(self.rect.x, self.rect.y + dy, self.rect.width, self.rect.height):
-                self.vel_y = 0
-                dy = 0
-                self.inair = False
-        
-        
-        self.rect.x += dx
-        self.rect.y += dy
+            self.rect.x += dx
+            self.rect.y += dy
+        else:
+            self.image = self.dead_image
 
 
 
