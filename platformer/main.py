@@ -36,7 +36,11 @@ while running:
     coin_group.update()
     coin_group.draw(screen)
     if not player.alive:
-        restart_btn.draw(screen)
+        if restart_btn.draw(screen):
+            player.__init__(100,screen_height-600)
+            enemy_group.empty()
+            coin_group.empty()
+            world = World(world_data, enemy_group, coin_group)
 
     pygame.display.update()
     clock.tick(FPS)
