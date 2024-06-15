@@ -27,12 +27,14 @@ class Player(Sprite):
         self.inair = False
         self.dead_image = pygame.image.load("assets/ghost.png")
         self.alive = True
+        self.score = 0
+        self.coin_sound = pygame.mixer.Sound("assets/coin.wav")
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
     
-    def update(self, tiles, enemy_group):
+    def update(self, tiles, enemy_group, coin_group):
         dx = 0
         dy = 0
         if self.alive:
@@ -90,6 +92,9 @@ class Player(Sprite):
             
             if pygame.sprite.spritecollide(self, enemy_group, True):
                 self.alive = False
+            if pygame.sprite.spritecollide(self, coin_group, True):
+                self.score += 1
+                self.coin_sound.play()
         
             self.rect.x += dx
             self.rect.y += dy
