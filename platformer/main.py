@@ -2,12 +2,16 @@ import pygame
 
 from constants import *
 from world import World
-from levels.level_creator import world_data
+
 
 from player import Player
 from button import Button
+import pickle
 
-
+level = 1
+f = open("levels/level1", "rb") 
+world_data = pickle.load(f)
+f.close()
 restart_btn = Button(screen_width/2, screen_height/2)
 
 pygame.init()
@@ -18,6 +22,9 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
 player = Player(100,screen_height-600)
+
+
+
 world = World(world_data, enemy_group, coin_group, door_group)
 
 bg_img = pygame.image.load("assets/sky.png")
