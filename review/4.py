@@ -55,3 +55,28 @@ def convert_to_C(f):
     return (f - 32) * (5/9)
 
 print(convert_to_C(23))
+
+
+
+# for i in range(100_000, 1_235_001, 2):
+#     s += i
+    
+# print(s)
+
+# name = 'Alenna'
+# for i in range(3):
+#     for i in name:
+#         print(i+'!')
+
+
+# for i in range(4):
+#     if i == 3:
+#         break
+#     print("salaam")
+    
+    
+# for i in range(4):
+#     if i == 2:
+#         continue
+#     print("salaam")
+
