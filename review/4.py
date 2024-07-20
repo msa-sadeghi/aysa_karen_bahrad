@@ -80,3 +80,14 @@ print(convert_to_C(23))
 #         continue
 #     print("salaam")
 
+x = {}
+
+names = ["person1", "person2", "person3"]
+foods = ["food1", "food2", "food3"]
+for i in range(3):
+    name = names[i]
+    food = foods[i]
+    x[name] = food
+    
+print(x)
+
