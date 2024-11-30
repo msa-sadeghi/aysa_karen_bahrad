@@ -20,6 +20,19 @@ class Food:
     def __init__(self):
         x = randint(0, (GAME_WIDTH//SPACE_SIZE)-1) * 50
         y = randint(0, (GAME_HEIGHT//SPACE_SIZE)-1) * 50
+         
+        while True:
+            for sb_x, sb_y in snake.coordinates:
+                if sb_x == x and sb_y == y:
+                    x = randint(0, (GAME_WIDTH//SPACE_SIZE)-1) * 50
+                    y = randint(0, (GAME_HEIGHT//SPACE_SIZE)-1) * 50
+                    break
+            else:
+                break
+                
+                    
+                    
+                
         self.coordinates = [x,y]
         canvas.create_oval(x,y, x + SPACE_SIZE, y +SPACE_SIZE, fill="red", tag= "food")
 
@@ -48,9 +61,23 @@ def next_turn(snake, food):
         del snake.coordinates[-1]    
         canvas.delete(snake.squares[-1])
         del snake.squares[-1]
-    window.after(200, next_turn,snake, food )
+    if check_game_over():
+        game_over()
+    else:
+        window.after(200, next_turn,snake, food )
         
-        
+def check_game_over():
+    x,y = snake.coordinates[0]
+    if x < 0 or x > GAME_WIDTH or y < 0 or y > GAME_HEIGHT:
+        return True
+    return False
+
+def game_over():
+    canvas.delete("all")
+    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2, text="Game Over",\
+        font=("arial", 32), fill="red")
+
+       
 def change_direction(new_dir)   :
     global direction
     if new_dir == "left":
@@ -71,7 +98,7 @@ def change_direction(new_dir)   :
 direction = "down"
 BODY_SIZE = 2
 GAME_WIDTH = 700
-GAME_HEIGHT = 700
+GAME_HEIGHT = 500
 SPACE_SIZE = 50
 score = 0
 window = Tk()
