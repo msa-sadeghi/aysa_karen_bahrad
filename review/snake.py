@@ -70,6 +70,9 @@ def check_game_over():
     x,y = snake.coordinates[0]
     if x < 0 or x > GAME_WIDTH or y < 0 or y > GAME_HEIGHT:
         return True
+    for body in snake.coordinates[1:]:
+        if x == body[0] and y == body[1]:
+            return True
     return False
 
 def game_over():
