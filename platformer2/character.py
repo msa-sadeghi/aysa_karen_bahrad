@@ -15,7 +15,7 @@ class Character(Sprite):
         self.all_images = {}
         for animation in self.animation_types:
             temp = []
-            num_of_images = os.listdir(f"assets/images/{type_}/{animation}")
+            num_of_images = len(os.listdir(f"assets/images/{type_}/{animation}"))
             for i in range(num_of_images):
                 img = pygame.image.load(f"assets/images/{type_}/{animation}/{i}.png")
                 img_w = img.get_width()
