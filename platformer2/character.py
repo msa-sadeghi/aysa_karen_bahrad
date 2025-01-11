@@ -28,8 +28,30 @@ class Character(Sprite):
         self.action = "Idle"
         self.image = self.all_images[self.action][0]
         self.rect = self.image.get_rect(topleft=(x,y))
+        self.last_image_change_time = 0
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        self.animation()
+        img = self.all_images[self.action][self.image_number]
+        
+        screen.blit(img, self.rect)
+        
+    def animation(self):
+        if pygame.time.get_ticks() - self.last_image_change_time > 100:
+            self.last_image_change_time = pygame.time.get_ticks()
+            self.image_number += 1
+            if self.image_number >= len(self.all_images[self.action]):
+                self.image_number = 0
+                
+                
+    def move(self, moving_left, moving_right):
+        dx = 0
+        if moving_right:
+            dx += 5
+        if moving_left:
+            dx -= 5
+            
+        self.rect.x += dx
+        
         
             
             
