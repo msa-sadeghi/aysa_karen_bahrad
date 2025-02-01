@@ -1,6 +1,6 @@
 from pygame.sprite import Sprite
 import pygame
-
+from explosion import Explosion
 class Grenade(Sprite):
     def __init__(self, x,y, group, direction):
         super().__init__()
@@ -10,6 +10,7 @@ class Grenade(Sprite):
         self.direction = direction
         self.xspeed = 4
         self.yspeed = -13
+        self.timer = 100
         
         
     def update(self):
@@ -19,4 +20,8 @@ class Grenade(Sprite):
             self.xspeed = 0
         self.rect.y += self.yspeed
         self.yspeed += 1
+        
+        self.timer -= 1
+        if self.timer <= 0:
+            
         
