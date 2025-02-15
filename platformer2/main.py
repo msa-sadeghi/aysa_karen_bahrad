@@ -3,6 +3,7 @@ from config import *
 from character import Character
 player_bullet_group = pygame.sprite.Group()
 player_grenade_group = pygame.sprite.Group()
+explosion_group = pygame.sprite.Group()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 player = Character("player", 100, 300, 0, 10)
@@ -59,6 +60,8 @@ while running == True:
     player_bullet_group.draw(screen)
     player_bullet_group.update()      
     player_grenade_group.draw(screen)
-    player_grenade_group.update()      
+    player_grenade_group.update(explosion_group)      
+    explosion_group.draw(screen)
+    explosion_group.update()      
     pygame.display.update()
     clock.tick(FPS)

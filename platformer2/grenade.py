@@ -13,7 +13,7 @@ class Grenade(Sprite):
         self.timer = 100
         
         
-    def update(self):
+    def update(self, group):
         self.rect.x += self.xspeed * self.direction
         if self.rect.bottom + self.yspeed >= 300:
             self.yspeed = 0
@@ -23,5 +23,11 @@ class Grenade(Sprite):
         
         self.timer -= 1
         if self.timer <= 0:
+            self.kill()
+            Explosion(
+                self.rect.centerx,
+                self.rect.centery,
+                group
+            )
             
         
